@@ -1,0 +1,12 @@
+{
+  "name": "scc-scripts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Scripts du template de site de centre commercial, servis par jsDelivr",
+  "scripts": {
+    "build": "esbuild src/*.js --minify --target=es2020 --outdir=dist --entry-names=[name].min"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
+}
