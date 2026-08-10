@@ -4,7 +4,7 @@
   "private": true,
   "description": "Scripts du template de site de centre commercial, servis par jsDelivr",
   "scripts": {
-    "build": "esbuild src/*.js --minify --target=es2020 --outdir=dist --entry-names=[name].min"
+    "build": "esbuild src/*.js --minify --charset=utf8 --target=es2020 --outdir=dist --entry-names=[name].min"
   },
   "devDependencies": {
     "esbuild": "^0.24.0"
