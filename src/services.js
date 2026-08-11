@@ -2,16 +2,15 @@
   if ((window.scc ??= {}).services) return;
   window.scc.services = true;
 
-  const brancher = (item, index) => {
+  const brancher = (item) => {
     const tete = item.querySelector('.service-head');
     const corps = item.querySelector('.service-body');
     if (!tete || !corps) return;
 
-    const ouvert = index === 0;
-    item.classList.toggle('is-open', ouvert);
+    item.classList.remove('is-open');
     tete.setAttribute('role', 'button');
     tete.setAttribute('tabindex', '0');
-    tete.setAttribute('aria-expanded', String(ouvert));
+    tete.setAttribute('aria-expanded', 'false');
 
     const basculer = () => {
       const suivant = !item.classList.contains('is-open');
