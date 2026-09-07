@@ -25,7 +25,7 @@
       speed: reduit ? 0 : 600,
       autoplay: !reduit,
       autoplaySpeed: 6000,
-      pauseOnHover: true,
+      pauseOnHover: false,
       pauseOnFocus: true,
     });
   };
