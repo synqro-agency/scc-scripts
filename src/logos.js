@@ -46,13 +46,18 @@
     };
   };
 
-  const encreDe = (src, img) => {
+  /* La sonde attend l'evenement load et non decode() : dans un onglet en
+     arriere plan, decode() peut ne jamais se resoudre et le bandeau resterait
+     inchange jusqu'au retour de l'utilisateur sur l'onglet. */
+  const encreDe = (src) => {
     if (encres.has(src)) return encres.get(src);
-    const sonde = new Image();
-    sonde.crossOrigin = 'anonymous';
-    const promesse = sonde.decode
-      ? (sonde.src = src, sonde.decode().then(() => mesurer(sonde)).catch(() => null))
-      : Promise.resolve(null);
+    const promesse = new Promise((resoudre) => {
+      const sonde = new Image();
+      sonde.crossOrigin = 'anonymous';
+      sonde.addEventListener('load', () => resoudre(mesurer(sonde)), { once: true });
+      sonde.addEventListener('error', () => resoudre(null), { once: true });
+      sonde.src = src;
+    });
     encres.set(src, promesse);
     return promesse;
   };
@@ -79,7 +84,7 @@
     img.dataset.sccLogo = '1';
     const lancer = () => {
       const src = img.currentSrc || img.src;
-      if (src) encreDe(src, img).then((encre) => appliquer(img, encre));
+      if (src) encreDe(src).then((encre) => appliquer(img, encre));
     };
     if (img.complete && img.naturalWidth) lancer();
     else img.addEventListener('load', lancer, { once: true });
